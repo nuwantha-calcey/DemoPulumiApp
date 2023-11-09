@@ -21,9 +21,11 @@ jobs:
           aws-region: eu-central-1
       - uses: pulumi/actions@v4
         with:
+          refresh: true
           command: preview
           stack-name: nuwantha-calcey/DemoPulumiApp/Dev
           work-dir: ./infra/Core
           comment-on-summary: true
+          color: always
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
