@@ -1,0 +1,27 @@
+name: Pulumi Deployement
+on: 
+  workflow_dispatch:
+  push:
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read  # This is required for actions/checkout
+jobs:
+  preview:
+    name: Preview
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.0.x
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::134134424469:role/PulumiDeployementGithubActionRole
+          aws-region: eu-central-1
+      - uses: pulumi/actions@v4
+        with:
+          command: preview
+          stack-name: nuwantha-calcey/DemoPulumiApp/Dev
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
