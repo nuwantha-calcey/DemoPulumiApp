@@ -25,7 +25,7 @@ jobs:
         script: |
           const { data } = await github.rest.repos.getAllEnvVars({
             repository_id: context.repo.id,
-            environment_name: ${{ inputs.environment }}
+            environment_name: '${{ inputs.environment }}'
           });
           return data;
         result-encoding: string
