@@ -12,6 +12,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    permissions:
+      repository-projects: read
+
     steps:
     - name: Dump GitHub context
       env:
