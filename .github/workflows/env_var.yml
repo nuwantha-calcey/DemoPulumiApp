@@ -23,6 +23,7 @@ jobs:
       uses: actions/github-script@v7
       with:
         script: |
+          echo "repo_id: ${{ context.repo.id }}"
           const { data } = await github.rest.actions.listEnvironmentVariables({
             repository_id: context.repo.id,
             environment_name: '${{ inputs.environment }}'
