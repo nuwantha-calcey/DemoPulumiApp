@@ -24,7 +24,7 @@ jobs:
       with:
         script: |
           echo "repo_id: ${{ context.repo.id }}"
-          const { data } = await github.rest.actions.listEnvironmentVariables({
+          const { data } = await github.rest.actions.getEnvironmentSecrets({
             repository_id: context.repo.id,
             environment_name: '${{ inputs.environment }}'
           });
