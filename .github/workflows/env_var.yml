@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      repository-projects: read
+      deployments: read
 
     steps:
     - name: Dump GitHub context
