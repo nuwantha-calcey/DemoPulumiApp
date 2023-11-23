@@ -22,7 +22,7 @@ jobs:
 
     - name: Fetch environment variables
       id: fetch-vars
-      uses: actions/github-script@v6
+      uses: actions/github-script@v5
       with:
         script: |
           const { data } = await github.rest.actions.listEnvironmentVariables({
