@@ -1,0 +1,34 @@
+name: Get Environment Variables
+
+on: 
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'The environment to deploy to'
+        required: true
+        type: environment
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
+
+    - name: Fetch environment variables
+      id: fetch-vars
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const { data } = await github.rest.repos.getAllEnvVars({
+            repository_id: context.repo.id,
+            environment_name: ${{ inputs.environment }}
+          });
+          return data;
+        result-encoding: string
+
+    - name: Use the Variables
+      run: echo "The environment variables are ${{ steps.fetch-vars.outputs.result }}"
