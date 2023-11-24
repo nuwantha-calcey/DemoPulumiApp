@@ -27,7 +27,7 @@ jobs:
         github-token: ${{ secrets.REPOSITORY_ACCESS_TOKEN }}
         script: |
           const { data } = await github.rest.actions.listEnvironmentVariables({
-            repository_id: ${{ env.Repository_Id }},
+            repository_id: ${{ github.repository_id }},
             environment_name: '${{ inputs.environment }}'
           });
           return data;
