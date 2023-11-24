@@ -21,8 +21,6 @@ jobs:
     - name: Fetch environment variables
       id: fetch-vars
       uses: actions/github-script@v7
-      env:
-        Repository_Id: '${{ github.repository_id }}'
       with:
         github-token: ${{ secrets.REPOSITORY_ACCESS_TOKEN }}
         script: |
@@ -30,8 +28,9 @@ jobs:
             repository_id: ${{ github.repository_id }},
             environment_name: '${{ inputs.environment }}'
           });
-          return data;
-        result-encoding: string
+          for (let var of data.variables) {
+           core.setOutput(var.name, var.value);
+          }
 
     - name: Use the Variables
-      run: echo "The environment variables are ${{ steps.fetch-vars.outputs.result }}"
+      run: echo "The environment variable AWS_PROFILE_NAME is ${{ steps.fetch-vars.outputs.AWS_PROFILE_NAME }}"
