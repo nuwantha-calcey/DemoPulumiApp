@@ -22,7 +22,7 @@ jobs:
       id: fetch-vars
       uses: actions/github-script@v7
       with:
-        github-token: ${{ secrets.REPOSITORY_ACCESS_TOKEN }}
+        # github-token: ${{ secrets.REPOSITORY_ACCESS_TOKEN }}
         script: |
           const { data } = await github.rest.actions.listEnvironmentVariables({
             repository_id: 716450674,
