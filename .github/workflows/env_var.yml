@@ -28,8 +28,8 @@ jobs:
             repository_id: ${{ github.repository_id }},
             environment_name: '${{ inputs.environment }}'
           });
-          for (let var of data.variables) {
-           core.setOutput(var.name, var.value);
+          for (let envVar of data.variables) {
+           core.setOutput(envVar.name, envVar.value);
           }
 
     - name: Use the Variables
