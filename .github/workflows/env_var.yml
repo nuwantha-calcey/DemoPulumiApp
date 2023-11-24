@@ -12,8 +12,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    permissions: read-all
-
     steps:
     - name: Dump GitHub context
       env:
@@ -23,11 +21,13 @@ jobs:
     - name: Fetch environment variables
       id: fetch-vars
       uses: actions/github-script@v7
+      env:
+        Repository_Id: '${{ github.repository_id }}'
       with:
-        # github-token: ${{ secrets.REPOSITORY_ACCESS_TOKEN }}
+        github-token: ${{ secrets.REPOSITORY_ACCESS_TOKEN }}
         script: |
           const { data } = await github.rest.actions.listEnvironmentVariables({
-            repository_id: 716450674,
+            repository_id: ${{ env.Repository_Id }},
             environment_name: '${{ inputs.environment }}'
           });
           return data;
