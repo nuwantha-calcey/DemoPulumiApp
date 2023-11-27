@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DemoPulumiApp.Controllers
 {
     // test comment
+    // another
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
