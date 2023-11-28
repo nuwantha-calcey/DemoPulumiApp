@@ -20,7 +20,7 @@ jobs:
           fi
         env:
           ACTOR: ${{ github.actor }}
-          AUTHORIZED_USERS: ${{ fromJSON(secrets.AUTHORIZED_USERS) }}
+          AUTHORIZED_USERS: ${{ fromJSON(vars.AUTHORIZED_USERS) }}
 
   deploy:
     needs: check_actor  
