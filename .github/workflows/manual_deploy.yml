@@ -11,6 +11,7 @@ on:
 jobs:
   check_actor:
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     steps:
       - name: Terminate workflow if actor is not authorized
         run: |
