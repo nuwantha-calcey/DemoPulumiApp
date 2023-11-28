@@ -13,15 +13,16 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     steps:
-      - name: Terminate workflow if actor is not authorized
-        run: |
-          if [[ ! " ${AUTHORIZED_USERS[@]} " =~ " ${ACTOR} " ]]; then
-            echo "Actor ${ACTOR} is not authorized to run this workflow."
-            exit 1
-          fi
-        env:
-          ACTOR: ${{ github.actor }}
-          AUTHORIZED_USERS: ${{ fromJSON(vars.AUTHORIZED_USERS) }}
+     - uses: actions/github-script@v7
+       with:
+         script: |
+           const authorizedUsers = JSON.parse(process.env.AUTHORIZED_USERS);
+           const actor = context.actor;
+           if (!authorizedUsers.includes(actor)) {
+             core.setFailed(`Actor ${actor} is not authorized to run this workflow.`);
+           }
+       env:
+         AUTHORIZED_USERS: ${{ vars.AUTHORIZED_USERS }}
 
   deploy:
     needs: check_actor  
