@@ -16,7 +16,7 @@ jobs:
      - uses: actions/github-script@v7
        with:
          script: |
-           const authorizedUsers = JSON.parse(vars.AUTHORIZED_USERS);
+           const authorizedUsers = JSON.parse(process.env.AUTHORIZED_USERS);
            const actor = context.actor;
            if (!authorizedUsers.includes(actor)) {
              core.setFailed(`Actor ${actor} is not authorized to run this workflow.`);
