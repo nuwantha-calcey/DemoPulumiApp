@@ -9,7 +9,22 @@ on:
         type: environment
 
 jobs:
+  check_actor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Terminate workflow if actor is not authorized
+        run: |
+          if [[ ! " ${AUTHORIZED_USERS[@]} " =~ " ${ACTOR} " ]]; then
+            echo "Actor ${ACTOR} is not authorized to run this workflow."
+            exit 1
+          fi
+        env:
+          ACTOR: ${{ github.actor }}
+          AUTHORIZED_USERS: ${{ fromJSON(secrets.AUTHORIZED_USERS) }}
+
   deploy:
+    needs: check_actor  
+
     runs-on: ubuntu-latest
 
     environment: ${{ inputs.environment }}
