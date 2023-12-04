@@ -9,7 +9,24 @@ on:
         type: environment
 
 jobs:
+  check_actor:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+     - uses: actions/github-script@v7
+       with:
+         script: |
+           const authorizedUsers = JSON.parse(process.env.AUTHORIZED_USERS);
+           const actor = context.actor;
+           if (!authorizedUsers.includes(actor)) {
+             core.setFailed(`Actor ${actor} is not authorized to run this workflow.`);
+           }
+       env:
+         AUTHORIZED_USERS: ${{ vars.AUTHORIZED_USERS }}
+
   deploy:
+    needs: check_actor  
+
     runs-on: ubuntu-latest
 
     environment: ${{ inputs.environment }}
